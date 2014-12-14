@@ -15,6 +15,7 @@ class Proxy < Rack::Proxy
     params      = request.params
     geometry    = params.delete('style')
     backend_url = params.delete('url')
+    return [302, {'Location' => 'https://github.com/choonkeat/resize-upload-proxy'}, []] unless backend_url
 
     # rewrite
     uri = URI.join('http:/', backend_url)
@@ -36,6 +37,8 @@ class Proxy < Rack::Proxy
       [result.code, rack_compatible_headers, [res]]
     end
   rescue Exception
+    $logger.error $@
+    $logger.error $!
     [500, {'X-Exception' => $!.to_s}, []]
   end
 end
