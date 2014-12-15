@@ -26,9 +26,11 @@ class Proxy < Rack::Proxy
     # handle
     return super unless request.post?
 
+    original_filename = params['file'][:filename]
     thumb = Paperclip::Thumbnail.new(params['file'][:tempfile], geometry: geometry)
     output = thumb.make
     params['file'] = Rack::Multipart::UploadedFile.new(output, params['file'][:type])
+    params['file'].instance_variable_set('@original_filename', original_filename)
 
     t = Time.now
     RestClient.post uri.to_s, params, self.class.extract_http_request_headers(request.env) do |res, req, result, &block|
