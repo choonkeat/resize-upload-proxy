@@ -1,3 +1,5 @@
+# DEPRECATED; use [attache](https://github.com/choonkeat/attache) instead
+
 # Directly upload to S3 with image resized
 
 **Option 1**: Get [jQuery-File-Upload client side resizing](https://github.com/blueimp/jQuery-File-Upload/wiki/Client-side-Image-Resizing) to work in your app. Good luck.
